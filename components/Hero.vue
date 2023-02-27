@@ -1,6 +1,6 @@
 <template>
     <div class="hero">
-        <Logo />
+        <nuxt-link to="/"><img src="~assets/images/logo.png" alt="adopt-a-contractor" class="logo"></nuxt-link>
         <h1>Adopt a Contractor</h1>
     </div>
 </template>
@@ -12,10 +12,17 @@ export default {
 </script>
 
 <style  scoped>
+
+.logo {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+        display: block;
+    }
+
 .hero {
-    
+
     width: 100%;
-    
     display: flex;
     flex-direction: column;
     justify-content: center;

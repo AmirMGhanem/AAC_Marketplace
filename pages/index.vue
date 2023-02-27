@@ -1,20 +1,14 @@
 <template>
-  <div class="container">
-    <Hero />
-    <Signin />
+  <div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'IndexPage'
-}
+  export default {
+
+  }
 </script>
 
-
-<style>
-body {
-  background-color: #F6F8FB;
-}
+<style scoped>
 
 </style>
