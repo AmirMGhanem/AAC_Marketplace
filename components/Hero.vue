@@ -1,7 +1,6 @@
 <template>
     <div class="hero">
         <nuxt-link to="/"><img src="~assets/images/logo.png" alt="adopt-a-contractor" class="logo"></nuxt-link>
-        <h1>Adopt a Contractor</h1>
     </div>
 </template>
 
