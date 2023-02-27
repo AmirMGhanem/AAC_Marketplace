@@ -1,15 +1,24 @@
 <template>
     <div class="container">
-        <h1>Welcome To Adopt A Contractor Top Leads Marketplace</h1>
+        <h1>{{ HomeTitle }}</h1>
+        <p>{{ Title }}</p>
     </div>
 </template>
 
 <script>
-    export default {
-        
+
+
+export default {
+    computed: {
+        HomeTitle() {
+            return this.$store.state.HomeTitle
+        },
+        Title() {
+            return this.$store.getters.GetSubTitle(1)
+        },
+            
     }
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
