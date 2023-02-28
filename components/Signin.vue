@@ -1,19 +1,22 @@
 <template>
     <div class="signin container">
+        <div v-if="loginState == 401">
+            <h1 style="background-color: red;">Invalid Credentials!!!</h1>
+        </div>
         <form action="POST" class="signin">
             <div class="signin-card">
                 <h1>Sign In</h1>
                 <div>
                     <label for="username">Username</label>
-                    <input type="username" v-model="username" name="username" id="username" placeholder="Username">
+                    <input type="username" v-model="user_login" name="username" id="username" placeholder="Username">
                 </div>
                 <div>
                     <label for="password">Password</label>
-                    <input type="password" v-model="password" name="password" id="password" placeholder="Password">
+                    <input type="password" v-model="user_password" name="password" id="password" placeholder="Password">
                 </div>
                 <div class="forgot-password">
                     <nuxt-link to="#">Forgot Password?</nuxt-link>
-                    
+
 
                 </div>
 
@@ -21,7 +24,7 @@
                     <input type="checkbox" name="remember-me" id="remember-me">
                     <label for="remember-me">Remember Me</label>
                 </div>
-                
+
 
                 <button type="submit" @click.prevent="login">Sign In</button>
             </div>
@@ -32,18 +35,33 @@
 
 <script >
 
+import { login } from '../api/auth.js';
 
 export default {
-    
-    data() {
-        return {
-            username: '',
-            password: ''
+    methods: {
+        async login() {
+            const { user_login, user_password } = this;
+            try {
+                const response = await login(user_login, user_password);
+                this.$store.commit('setToken', response.token);
+                this.$store.commit('setUserData', response);
+                this.$router.push('/');
+            } catch (error) {
+                if (error.response && error.response.status === 401) {
+                    this.loginState = 401;
+                } else {
+                    console.log(error);
+                }
+            }
         }
     },
-    methods: {
-        login() {
-            console.log('login clicked ' + this.username + ' ' + this.password);
+    data() {
+        return {
+
+            user_login: '',
+            user_password: '',
+
+            loginState: 0
         }
     }
 }
@@ -104,8 +122,8 @@ button {
     cursor: pointer;
 }
 
-.forgot-password{
-    margin-left:100px;
+.forgot-password {
+    margin-left: 100px;
     margin-top: 10px;
 }
 

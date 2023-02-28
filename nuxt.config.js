@@ -35,7 +35,12 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
+    '@nuxtjs/axios',
   ],
+
+  fetch: {
+    baseURL: 'http://127.0.0.1:8000',
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
