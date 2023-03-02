@@ -8,7 +8,7 @@ export const state = () => ({
             "We are a top lead marketplace for customers and contractors to connect and get the job done right the first time.",],
     },
     token: '',
-    user: null
+    user: "sad"
 });
 
 export const mutations = {
@@ -17,6 +17,10 @@ export const mutations = {
     },
     setUserData(state, user) {
         state.user = user
+    },
+    logout(state) {
+        state.token = ''
+        state.user = null
     }
 }
 

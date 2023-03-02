@@ -16,6 +16,8 @@ export default {
     ]
   },
 
+
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
   ],
@@ -36,13 +38,21 @@ export default {
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
+    '@nuxtjs/vuetify',
+
   ],
 
   fetch: {
     baseURL: 'http://127.0.0.1:8000',
   },
 
+  
+  vuetify: {
+    /* module options */
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   }
 }
+
