@@ -5,7 +5,7 @@ export const state = () => ({
     "Home": {
         "Title": "Welcome To Adopt A Contractor Top Leads Marketplace",
         "SubTitle": ["111We are a top lead marketplace for customers and contractors to connect and get the job done right the first time.",
-            "222We are a top lead marketplace for customers and contractors to connect and get the job done right the first time.",],
+            "We are a top lead marketplace for customers and contractors to connect and get the job done right the first time.",],
     },
     token: '',
     user: null

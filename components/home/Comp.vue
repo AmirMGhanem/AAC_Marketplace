@@ -14,7 +14,7 @@ export default {
             return this.$store.state.HomeTitle
         },
         Title() {
-            return this.$store.getters.GetSubTitle(1)
+            return this.$store.getters.GetSubTitle(0)
         },
         user() {
             return this.$store.state.user
