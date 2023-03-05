@@ -3,27 +3,34 @@
         <div class="title-container">
             <h1>{{ title }}</h1>
         </div>
-        <v-stepper  v-model="currentStep">
+        <v-stepper v-model="currentStep">
             <v-stepper-header>
-                <v-stepper-step   editable step="1" :complete="currentStep>1" :editable="currentStep>1">
-                    Select campaign settings
+                <v-stepper-step editable step="1" :complete="currentStep > 1" :editable="currentStep > 1">
+                    Select A Vertical
                 </v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="2" :complete="currentStep>2" :editable="currentStep>2">Create an ad group</v-stepper-step>
+                <v-stepper-step step="2" :complete="currentStep > 2" :editable="currentStep > 2">Select A
+                    Vertical</v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="3" :complete="currentStep>3" :editable="currentStep>3">Create an ad</v-stepper-step>
+                <v-stepper-step step="3" :complete="currentStep > 3" :editable="currentStep > 3">Create an
+                    ad</v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="4" :complete="currentStep>4" :editable="currentStep>4">Create an ad 4</v-stepper-step>
+                <v-stepper-step step="4" :complete="currentStep > 4" :editable="currentStep > 4">Create an ad
+                    4</v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="5" :complete="currentStep>5" :editable="currentStep>5">Create an ad 5</v-stepper-step>
+                <v-stepper-step step="5" :complete="currentStep > 5" :editable="currentStep > 5">Create an ad
+                    5</v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="6" :complete="currentStep>6" :editable="currentStep>6" >Create an ad 6</v-stepper-step>
+                <v-stepper-step step="6" :complete="currentStep > 6" :editable="currentStep > 6">Create an ad
+                    6</v-stepper-step>
             </v-stepper-header>
 
             <v-stepper-items>
                 <v-stepper-content step="1">
                     <v-card class="mb-5" color="red lighten-1" height="200px">
-                        <h1>step1</h1>
+                        <h1>Select A Vertical</h1>
+                        <CustomSelect :options="verticals()" :label="'Select Vertical'" />
+                        
                     </v-card>
                     <v-btn class="continue-btn" @click="currentStep = 2">
                         Continue
@@ -80,6 +87,9 @@
 </template>
 
 <script>
+
+import { mapGetters } from 'vuex';
+
 export default {
     data() {
         return {
@@ -97,12 +107,21 @@ export default {
             required: true,
         },
     },
+    created() {
+        this.$store.dispatch('vertical/fetchAllVerticals');
+    },
+    methods:{
+        ...mapGetters({
+            verticals: 'vertical/GetVerticals',
+        }),
+    }
 };
+
 </script> 
 
 <style  scoped>
 
-.mb-5{
+.mb-5 {
     text-align: center;
 }
 
@@ -123,7 +142,7 @@ export default {
 
 
 .v-stepper__label {
-  color: red !important;
+    color: red !important;
 }
 
 
@@ -137,7 +156,5 @@ export default {
     justify-content: left;
     margin-left: 15px;
     margin-bottom: 50px;
-    
 
-}
-</style>
+}</style>

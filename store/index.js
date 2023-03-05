@@ -8,7 +8,8 @@ export const state = () => ({
             "We are a top lead marketplace for customers and contractors to connect and get the job done right the first time.",],
     },
     token: '',
-    user: "sad"
+    user: "sad",
+    
 });
 
 export const mutations = {
@@ -21,7 +22,8 @@ export const mutations = {
     logout(state) {
         state.token = ''
         state.user = null
-    }
+    },
+
 }
 
 export const getters = {
@@ -33,6 +35,11 @@ export const getters = {
     },
     GetSubTitle: (state) => (index) => {
         return state.Home.SubTitle[index];
-    }
+    },
+
 }
 
+
+export const actions = {
+
+};
