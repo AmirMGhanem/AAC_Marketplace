@@ -39,6 +39,7 @@ export default {
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
     '@nuxtjs/vuetify',
+    '@nuxtjs/auth-next',
 
   ],
 
@@ -46,14 +47,40 @@ export default {
     baseURL: 'http://127.0.0.1:8000',
   },
 
-  
+
   vuetify: {
     /* module options */
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+  axios: {
+    baseURL: "http://127.0.0.1:8000"
+  },
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+          global: true,
+          //required: true,
+          type: ''
+        },
+        user: {
+          property: '',
+
+          // autoFetch: true
+        },
+        endpoints: {
+          login: { url: '/api/v1/auth/login', method: 'post',propertyName: 'token' },
+          // logout: { url: '/api/auth/logout', method: 'post' },
+          user: { url: '/api/v1/auth/user', method: 'get', propertyName: 'user'}
+        }
+      }
+    }
   }
+
 }
 
 

@@ -25,14 +25,16 @@
                 </b-navbar-nav>
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
+                    <div v-if="$auth.loggedIn" class="id">User ID-{{ $auth.user.user_id }}</div>
                     <b-nav-item-dropdown right>
                         <!-- Using 'button-content' slot -->
+                        
                         <template #button-content>
                             <em>My Account</em>
                         </template>
-                        <div v-if="user">
+                        <div v-if="$auth.loggedIn">
                             <b-dropdown-item to="/profile">Profile</b-dropdown-item>
-                            <b-dropdown-item @click="logout">Logout</b-dropdown-item>
+                            <b-dropdown-item @click="$auth.logout()">Logout</b-dropdown-item>
                         </div>
                         <div v-else>
                             <b-dropdown-item to="/signin">Sign in</b-dropdown-item>
@@ -62,7 +64,17 @@ export default {
 </script>
 
 <style  scoped>
-
+.id{
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    position: absolute;
+    top: 35%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-0%);
+    transform: translateX(-80px);
+}
 .logo {
     width: 120px;
     height: 60px;

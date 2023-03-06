@@ -1,72 +1,42 @@
 <template>
     <div class="signin container">
-        <div v-if="loginState == 401">
-            <h1 style="background-color: red;">Invalid Credentials!!!</h1>
-        </div>
-        <form action="POST" class="signin">
-            <div class="signin-card">
-                <h1>Sign In</h1>
-                <div>
-                    <label for="username">Username</label>
-                    <input type="username" v-model="user_login" name="username" id="username" placeholder="Username">
-                </div>
-                <div>
-                    <label for="password">Password</label>
-                    <input type="password" v-model="user_password" name="password" id="password" placeholder="Password">
-                </div>
-                <div class="forgot-password">
-                    <nuxt-link to="#">Forgot Password?</nuxt-link>
-
-
-                </div>
-
-                <div class="rememebr-me">
-                    <input type="checkbox" name="remember-me" id="remember-me">
-                    <label for="remember-me">Remember Me</label>
-                </div>
-
-
-                <button type="submit" @click.prevent="login">Sign In</button>
+        <form @submit.prevent="userLogin" class="signin-card">
+            <h1>Sign In</h1>
+            <div>
+                <label for="username">Username</label>
+                <input type="text" v-model="login.user_login" id="username" placeholder="Username" required>
             </div>
-
+            <div>
+                <label for="password">Password</label>
+                <input type="password" v-model="login.user_password" id="password" placeholder="Password" required>
+            </div>
+            <button type="submit">Sign In</button>
         </form>
     </div>
 </template>
 
-<script >
-
-import { login } from '../api/auth.js';
-
+<script>
 export default {
-    methods: {
-        async login() {
-            const { user_login, user_password } = this;
-            try {
-                const response = await login(user_login, user_password);
-                this.$store.commit('setToken', response.token);
-                this.$store.commit('setUserData', response);
-                this.$router.push('/');
-            } catch (error) {
-                if (error.response && error.response.status === 401) {
-                    this.loginState = 401;
-                } else {
-                    console.log(error);
-                }
+    data() {
+        return {
+            login: {
+                user_login: '',
+                user_password: ''
             }
         }
     },
-    data() {
-        return {
-
-            user_login: '',
-            user_password: '',
-
-            loginState: 0
+    methods: {
+        async userLogin() {
+            try {
+                let response = await this.$auth.loginWith('local', { data: this.login })
+                console.log(response)
+            } catch (err) {
+                console.log(err)
+            }
         }
     }
 }
 </script>
-
 <style scoped>
 .signin-card {
     background-color: #FFB727;

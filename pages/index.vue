@@ -12,11 +12,6 @@ import Comp  from '@/components/home/Comp'
     components: {
       Comp
     },
-    computed:{
-      user() {
-            return this.$store.state.user
-        }
-    }
 
   }
 </script>

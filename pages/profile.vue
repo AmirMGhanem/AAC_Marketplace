@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 v-if="user">Hello {{ user?.user_name }}</h1>
+        <h1>Hello {{$auth.user.user_name}}</h1>
     </div>
 </template>
 
