@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <Stepper  :title="title"  :steps_list="steps_list"  />
+        <Stepper :title="title" :steps_list="steps_list" />
 
     </div>
 </template>
@@ -21,9 +21,7 @@ export default {
 </script>
 
 <style scoped>
-
-.container{
+.container {
     margin-top: 100px;
 }
-
 </style>
