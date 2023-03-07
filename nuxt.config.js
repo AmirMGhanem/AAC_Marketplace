@@ -27,7 +27,15 @@ export default {
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  // components: true,
+
+  components: {
+    dirs: [
+      '~/components',
+      '~/components/uploader/'
+    ]
+  },
+  
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
@@ -54,6 +62,8 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    vendor: ['csv-parse']
+
   },
   axios: {
     baseURL: "http://127.0.0.1:8000"

@@ -40,6 +40,7 @@
                 <v-stepper-content step="2">
                     <v-card class="mb-5" color="grey lighten-1" height="200px">
                         <h1>step2</h1>
+                        <CsvImporter/>
                     </v-card>
                     <v-btn class="continue-btn" @click="currentStep = 3">
                         Continue
@@ -49,6 +50,7 @@
                 <v-stepper-content step="3">
                     <v-card class="mb-5" color="grey lighten-1" height="200px">
                         <h1>step3</h1>
+                        
                     </v-card>
                     <v-btn class="continue-btn" @click="currentStep = 4">
                         Continue
@@ -85,7 +87,6 @@
         </v-stepper>
     </div>
 </template>
-
 <script>
 
 import { mapGetters } from 'vuex';
