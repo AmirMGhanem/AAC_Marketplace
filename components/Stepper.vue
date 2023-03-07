@@ -27,7 +27,7 @@
 
             <v-stepper-items>
                 <v-stepper-content step="1">
-                    <v-card class="mb-5" color="red lighten-1" height="200px">
+                    <v-card class="mb-5" color="red lighten-1" >
                         <h1>Select A Vertical</h1>
                         <CustomSelect :options="verticals()" :label="'Select Vertical'" />
                         
@@ -38,7 +38,7 @@
                 </v-stepper-content>
 
                 <v-stepper-content step="2">
-                    <v-card class="mb-5" color="grey lighten-1" height="200px">
+                    <v-card class="mb-5" color="grey lighten-1" >
                         <h1>step2</h1>
                         <CsvImporter/>
                     </v-card>
@@ -48,7 +48,7 @@
                 </v-stepper-content>
 
                 <v-stepper-content step="3">
-                    <v-card class="mb-5" color="grey lighten-1" height="200px">
+                    <v-card class="mb-5" color="grey lighten-1" >
                         <h1>step3</h1>
                         
                     </v-card>
@@ -58,7 +58,7 @@
                 </v-stepper-content>
 
                 <v-stepper-content step="4">
-                    <v-card class="mb-5" color="grey lighten-1" height="200px">
+                    <v-card class="mb-5" color="grey lighten-1" >
                         <h1>step4</h1>
                     </v-card>
                     <v-btn class="continue-btn" @click="currentStep = 5">
@@ -67,7 +67,7 @@
                 </v-stepper-content>
 
                 <v-stepper-content step="5">
-                    <v-card class="mb-5" color="grey lighten-1" height="200px">
+                    <v-card class="mb-5" color="grey lighten-1" >
                         <h1>step5</h1>
                     </v-card>
                     <v-btn class="continue-btn" @click="currentStep = 6">
@@ -76,7 +76,7 @@
                 </v-stepper-content>
 
                 <v-stepper-content step="6">
-                    <v-card class="mb-5" color="grey lighten-1" height="200px">
+                    <v-card class="mb-5" color="grey lighten-1" >
                         <h1>step6</h1>
                     </v-card>
                     <v-btn class="continue-btn" @click="currentStep = 1">

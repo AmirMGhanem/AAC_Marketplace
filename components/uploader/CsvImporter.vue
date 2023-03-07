@@ -1,50 +1,83 @@
 <template>
     <div>
+
         <input type="file" ref="fileInput" @change="handleFileUpload" />
-        <table>
-            <thead>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(row, index) in mappedData" :key="index">
-                    <td>{{ row.firstName }}</td>
-                    <td>{{ row.lastName }}</td>
-                    <td>{{ row.email }}</td>
-                    <td>{{ row.phone }}</td>
-                </tr>
-            </tbody>
-        </table>
+        <div style="overflow-x:auto;">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th v-for="(header, index) in getMappedHeaders()" :key="index">
+                            {{ header }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(row, index) in getMappedData()" :key="index">
+                        <td v-for="(value, key) in row" :key="key">
+                            {{ value }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 </template>
-  
 <script>
 import { parse as csvParse } from "csv-parse";
-import Papa from "papaparse";
+import { mapGetters, mapMutations, mapActions } from "vuex";
+
 
 export default {
+
+
     data() {
         return {
             csvData: null,
-            mappedData: []
         };
     },
+
+
     methods: {
+        ...mapMutations("uploadLeads", [
+            "setMappedHeaders",
+            "setMappedData"
+        ]),
+
+        ...mapGetters("uploadLeads",
+            [
+                "getMappedHeaders",
+                "getMappedData"
+            ]
+        ),
+
+
+
+
+
         handleFileUpload() {
             const file = this.$refs.fileInput.files[0];
             if (!file) {
                 return;
             }
+
+
             const reader = new FileReader();
-            reader.onload = () => {
-                this.csvData = reader.result;
-                this.parseCsvData();
-            };
-            reader.readAsText(file);
+            reader.addEventListener(
+                "load",
+                () => {
+
+                    this.csvData = reader.result;
+                    const data = this.parseCsvData();
+                },
+                false
+            );
+
+            if (file) {
+                // file to blob
+                let blob = new Blob([file], { type: "text/csv" });
+                let res = reader.readAsText(blob);
+            }
         },
         parseCsvData() {
             csvParse(this.csvData, (err, data) => {
@@ -56,14 +89,49 @@ export default {
             });
         },
         mapData(data) {
-            this.mappedData = Papa.parse(data, {
-                header: true,
-                dynamicTyping: true
-            }).data;
+            const headers = data.slice(0, 1)[0];
+            const mappedData = data.slice(1).map(row => {
+                return row.reduce((data, value, index) => {
+                    data[headers[index]] = value;
+                    return data;
+                }, {});
+            });
+
+            
+            this.setMappedHeaders(headers);
+            this.setMappedData(mappedData);
+            
         }
     }
 };
 </script>
-  
-<style scoped></style>
-  
+<style scopeds>
+.table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table th,
+.table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.table th {
+    background-color: #f2f2f2;
+    text-align: left;
+    font-weight: bold;
+}
+
+.table tr:hover {
+    background-color: #f5f5f5;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+input[type="file"] {
+    margin-bottom: 16px;
+}
+</style>
