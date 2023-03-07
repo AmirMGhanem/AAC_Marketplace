@@ -50,7 +50,7 @@
                 <v-stepper-content step="3">
                     <v-card class="mb-5" color="grey lighten-1" >
                         <h1>step3</h1>
-                        
+                        <Mapper/>
                     </v-card>
                     <v-btn class="continue-btn" @click="currentStep = 4">
                         Continue
@@ -91,11 +91,11 @@
 
 import { mapGetters } from 'vuex';
 
+
 export default {
     data() {
         return {
             currentStep: 1,
-            
         };
     },
     props: {
@@ -109,11 +109,11 @@ export default {
         },
     },
     created() {
-        this.$store.dispatch('vertical/fetchAllVerticals');
+        this.$store.dispatch("vertical/fetchAllVerticals");
     },
-    methods:{
+    methods: {
         ...mapGetters({
-            verticals: 'vertical/GetVerticals',
+            verticals: "vertical/GetVerticals",
         }),
     }
 };

@@ -32,7 +32,7 @@ export default {
   components: {
     dirs: [
       '~/components',
-      '~/components/uploader/'
+      '~/components/uploadLeads/'
     ]
   },
   
