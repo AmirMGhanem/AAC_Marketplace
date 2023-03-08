@@ -34,6 +34,7 @@ export default {
       '~/components',
       '~/components/uploadLeads/',
       '~/components/BuyLeads/',
+      '~/components/Generic_components/',
     ]
   },
   
