@@ -80,7 +80,7 @@ export default {
             }
         },
         parseCsvData() {
-            csvParse(this.csvData, (err, data) => {
+            csvParse(this.csvData, { from: 1, to: 10 }, (err, data) => {
                 if (err) {
                     console.error(err);
                 } else {
