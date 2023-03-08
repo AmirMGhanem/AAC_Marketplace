@@ -12,11 +12,9 @@
                 <v-stepper-step step="2" :complete="currentStep > 2" :editable="currentStep > 2">Select A
                     Vertical</v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="3" :complete="currentStep > 3" :editable="currentStep > 3">Create an
-                    ad</v-stepper-step>
+                <v-stepper-step step="3" :complete="currentStep > 3" :editable="currentStep > 3">Fields Mapping</v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="4" :complete="currentStep > 4" :editable="currentStep > 4">Create an ad
-                    4</v-stepper-step>
+                <v-stepper-step step="4" :complete="currentStep > 4" :editable="currentStep > 4">Preview & Confirmation</v-stepper-step>
                 <v-divider></v-divider>
                 <v-stepper-step step="5" :complete="currentStep > 5" :editable="currentStep > 5">Create an ad
                     5</v-stepper-step>
@@ -27,59 +25,59 @@
 
             <v-stepper-items>
                 <v-stepper-content step="1">
-                    <v-card class="mb-5" color="red lighten-1" >
+                    <v-card class="mb-5" color="red lighten-1">
                         <h1>Select A Vertical</h1>
                         <CustomSelect :options="verticals()" :label="'Select Vertical'" />
-                        
+
                     </v-card>
-                    <v-btn class="continue-btn" @click="currentStep = 2">
+                    <v-btn class="continue-btn" @click="nextStep">
                         Continue
                     </v-btn>
                 </v-stepper-content>
 
                 <v-stepper-content step="2">
-                    <v-card class="mb-5" color="grey lighten-1" >
+                    <v-card class="mb-5" color="grey lighten-1">
                         <h1>step2</h1>
-                        <CsvImporter/>
+                        <CsvImporter />
                     </v-card>
-                    <v-btn class="continue-btn" @click="currentStep = 3">
+                    <v-btn class="continue-btn" @click="nextStep">
                         Continue
                     </v-btn>
                 </v-stepper-content>
 
                 <v-stepper-content step="3">
-                    <v-card class="mb-5" color="grey lighten-1" >
+                    <v-card class="mb-5" color="grey lighten-1">
                         <h1>step3</h1>
-                        <Mapper/>
+                        <Mapper />
                     </v-card>
-                    <v-btn class="continue-btn" @click="currentStep = 4">
+                    <v-btn class="continue-btn" @click="nextStep">
                         Continue
                     </v-btn>
                 </v-stepper-content>
 
                 <v-stepper-content step="4">
-                    <v-card class="mb-5" color="grey lighten-1" >
+                    <v-card class="mb-5" color="grey lighten-1">
                         <h1>step4</h1>
                     </v-card>
-                    <v-btn class="continue-btn" @click="currentStep = 5">
+                    <v-btn class="continue-btn" @click="nextStep">
                         Continue
                     </v-btn>
                 </v-stepper-content>
 
                 <v-stepper-content step="5">
-                    <v-card class="mb-5" color="grey lighten-1" >
+                    <v-card class="mb-5" color="grey lighten-1">
                         <h1>step5</h1>
                     </v-card>
-                    <v-btn class="continue-btn" @click="currentStep = 6">
+                    <v-btn class="continue-btn" @click="nextStep">
                         Continue
                     </v-btn>
                 </v-stepper-content>
 
                 <v-stepper-content step="6">
-                    <v-card class="mb-5" color="grey lighten-1" >
+                    <v-card class="mb-5" color="grey lighten-1">
                         <h1>step6</h1>
                     </v-card>
-                    <v-btn class="continue-btn" @click="currentStep = 1">
+                    <v-btn class="continue-btn" @click="nextStep">
                         Start over
                     </v-btn>
                 </v-stepper-content>
@@ -107,6 +105,7 @@ export default {
             type: Array,
             required: true,
         },
+
     },
     created() {
         this.$store.dispatch("vertical/fetchAllVerticals");
@@ -115,13 +114,54 @@ export default {
         ...mapGetters({
             verticals: "vertical/GetVerticals",
         }),
+        nextStep() {
+            switch (this.currentStep) {
+                case 1:
+                    if (this.getChoosedVertical) {
+                        this.currentStep++;
+                    }
+                    else{
+                        alert("Please select a vertical")
+                    
+                    }
+                    break;
+                case 2:
+                    if (this.getMappedHeaders.length > 0 && this.getMappedHeaders.length > 0) {
+                        this.currentStep++;
+                    }
+                    else{
+                        alert("Please Upload File")
+                    
+                    }
+                    break;
+                case 3:
+                    this.currentStep++;
+                    break;
+                case 4:
+                    this.currentStep++;
+                    break;
+                case 5:
+                    this.currentStep++;
+                    break;
+                case 6:
+                    this.currentStep = 1;
+                    break;
+            }
+        },
+
+    },
+    computed: {
+        ...mapGetters("uploadLeads", [
+            "getChoosedVertical",
+            "getMappedHeaders",
+            "getMappedHeaders",
+        ])
     }
 };
 
 </script> 
 
 <style  scoped>
-
 .mb-5 {
     text-align: center;
 }
@@ -158,4 +198,5 @@ export default {
     margin-left: 15px;
     margin-bottom: 50px;
 
-}</style>
+}
+</style>

@@ -17,12 +17,26 @@
                         <b-dropdown-item to="/leandsmonetization">Leads monetization</b-dropdown-item>
                     </b-nav-item-dropdown>
 
+                    <b-nav-item-dropdown>
+                        <template #button-content>
+                            <em>Sell Leads</em>
+                        </template>
+                        <b-dropdown-item to="/current-orders">Current Orders</b-dropdown-item>
+                        <b-dropdown-item to="/offers-recieved">Offers Recieved </b-dropdown-item>
+                    </b-nav-item-dropdown>
+
+
+                    <b-nav-item-dropdown>
+                        <template #button-content>
+                            <em>Buy Leads</em>
+                        </template>
+                        <b-dropdown-item to="/new-order">Create New Order</b-dropdown-item>
+                        <b-dropdown-item to="/pickup-stock">Pick up the stock </b-dropdown-item>
+                    </b-nav-item-dropdown>
+
+
                 </b-navbar-nav>
-                <b-navbar-nav>
-                    <b-nav-item href="/myleads">My Leads</b-nav-item>
-                    <b-nav-item href="/sellleads">Sell Leads</b-nav-item>
-                    <b-nav-item href="/buyleads">Buy Leads</b-nav-item>
-                </b-navbar-nav>
+                
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
                     <div v-if="$auth.loggedIn" class="id">User ID-{{ $auth.user.user_id }}</div>

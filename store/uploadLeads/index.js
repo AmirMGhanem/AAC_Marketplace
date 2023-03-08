@@ -1,6 +1,7 @@
 export const state = () => ({
     mappedData: [],
     mappedHeaders: [],
+    choosedVertical:'',
 });
 
 
@@ -13,6 +14,9 @@ export const mutations = {
     setMappedHeaders(state, data) {
         state.mappedHeaders = data; 
     },
+    setChoosedVertical(state, data) {
+        state.choosedVertical = data; 
+    }
 };
 
 export const getters = {
@@ -22,6 +26,9 @@ export const getters = {
 
     getMappedHeaders: (state) => {
         return state.mappedHeaders;
+    },
+    getChoosedVertical: (state) => {
+        return state.choosedVertical;
     }
 
 

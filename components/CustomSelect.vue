@@ -1,7 +1,8 @@
 <template>
     <div>
         <label for="vertical">{{ label }}</label>
-        <select class="form-control" id="vertical" name="vertical">
+        <select class="form-control" id="vertical" name="vertical" @change="set_choosed_vertical">
+            <option value="">Select a vertical</option>
             <option v-for="o in options" :value="o.id">{{ o.name }}</option>
 
         </select>
@@ -11,10 +12,21 @@
 </template>
 
 <script >
+import { mapMutations } from 'vuex';
+
 export default {
     props: [
         'options', 'label'
     ],
+    methods: {
+        set_choosed_vertical(event) {
+            this.setChoosedVertical(event.target.value);
+        },
+        ...mapMutations("uploadLeads",
+            [
+                "setChoosedVertical",
+            ])
+    }
 
 }
 </script>
@@ -28,5 +40,4 @@ export default {
     padding: 5px;
     margin-bottom: 10px;
 }
-
 </style>

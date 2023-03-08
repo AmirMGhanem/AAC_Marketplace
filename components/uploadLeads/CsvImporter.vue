@@ -2,6 +2,11 @@
     <div>
 
         <input type="file" ref="fileInput" @change="handleFileUpload" />
+        <!-- Loading spinner -->
+        <div v-if="loading">
+            <v-progress-circular indeterminate color="primary"></v-progress-circular>
+        </div>
+        
         <div style="overflow-x:auto;">
             <table class="table">
                 <thead>
@@ -33,6 +38,7 @@ export default {
 
     data() {
         return {
+            loading: false,
             csvData: null,
         };
     },
@@ -56,23 +62,21 @@ export default {
 
 
         handleFileUpload() {
+            this.loading = true;
+
             const file = this.$refs.fileInput.files[0];
             if (!file) {
                 return;
             }
-
-
             const reader = new FileReader();
             reader.addEventListener(
                 "load",
                 () => {
-
                     this.csvData = reader.result;
                     const data = this.parseCsvData();
                 },
                 false
             );
-
             if (file) {
                 // file to blob
                 let blob = new Blob([file], { type: "text/csv" });
@@ -87,6 +91,7 @@ export default {
                     this.mapData(data);
                 }
             });
+            
         },
         mapData(data) {
             const headers = data.slice(0, 1)[0];
@@ -100,7 +105,7 @@ export default {
             
             this.setMappedHeaders(headers);
             this.setMappedData(mappedData);
-            
+            this.loading = false;
         }
     }
 };

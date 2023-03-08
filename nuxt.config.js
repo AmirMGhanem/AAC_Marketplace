@@ -32,7 +32,8 @@ export default {
   components: {
     dirs: [
       '~/components',
-      '~/components/uploadLeads/'
+      '~/components/uploadLeads/',
+      '~/components/BuyLeads/',
     ]
   },
   
