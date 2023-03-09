@@ -87,7 +87,7 @@
 </template>
 <script>
 
-import { mapGetters } from 'vuex';
+import { mapGetters,mapActions } from 'vuex';
 
 
 export default {
@@ -111,6 +111,9 @@ export default {
         this.$store.dispatch("vertical/fetchAllVerticals");
     },
     methods: {
+        ...mapActions("uploadLeads/mapper",[
+            "fetchAllFields"
+        ]),
         ...mapGetters({
             verticals: "vertical/GetVerticals",
         }),
@@ -127,6 +130,7 @@ export default {
                     break;
                 case 2:
                     if (this.getMappedHeaders.length > 0 && this.getMappedHeaders.length > 0) {
+                        this.fetchAllFields(this.getChoosedVertical);
                         this.currentStep++;
                     }
                     else{

@@ -1,13 +1,21 @@
 <template>
     <div class="container">
-
-        <div v-for="(field, index) in  getFields('Home_improvement')" :key="index" class="input-group">
-            <label for="`${field}`" class="label">{{ field }}</label>
-            <select class="input">
-                <option v-for="(header, index) in getMappedHeaders" :key="index">{{ header }}   V</option>
-                
-            </select>
-        </div>
+        <table>
+            <tbody>
+                <tr>
+                    <div v-for="(field, index) in  getAllFields" :key="index" class="input-group">
+                        <td>
+                            <label for="`${field}`" class="label">{{ field.verticalfields_fieldname }}</label>
+                        </td>
+                        <td>
+                            <select class="input">
+                                <option v-for="(header, index) in getMappedHeaders" :key="index">{{ header }} V</option>
+                            </select>
+                        </td>
+                    </div>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </template>
 
@@ -17,7 +25,6 @@ import { mapGetters } from 'vuex';
 export default {
     computed: {
         ...mapGetters("uploadLeads/mapper", [
-            "getFields",
             "getAllFields"
         ]),
 
@@ -38,7 +45,7 @@ export default {
 
 .input-group {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     align-items: flex-start;
     margin-bottom: 16px;
 }
@@ -58,7 +65,7 @@ export default {
     padding: 8px;
     text-align: center;
     font-size: larger;
-    
+
 
 }
 </style>

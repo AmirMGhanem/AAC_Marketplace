@@ -83,6 +83,10 @@ export const state = () => ({
 
 
 export const mutations = {
+    SET_FIELDS(state, fields) {
+        state.fields = fields;
+    }
+
 };
 
 
@@ -90,7 +94,10 @@ export const getters = {
 
 
     getAllFields: (state) => {
+
         return state.fields;
+        
+
     },
 
 
@@ -114,6 +121,17 @@ export const getters = {
 
 };
 
+import { getVerticalFields } from "../../api/verticals";
 export const actions = {
+    async fetchAllFields({ commit },vertical) {
+        try {
+            const fields = await getVerticalFields(vertical);
+            commit('SET_FIELDS', fields);
 
+        } catch (error) {
+
+        }
+    }
+
+    
 };

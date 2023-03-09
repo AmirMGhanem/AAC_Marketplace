@@ -2,11 +2,12 @@
     <div>
 
         <input type="file" ref="fileInput" @change="handleFileUpload" />
+        <button class="reset-btn" @click="reset">Reset</button>
         <!-- Loading spinner -->
         <div v-if="loading">
             <v-progress-circular indeterminate color="primary"></v-progress-circular>
         </div>
-        
+
         <div style="overflow-x:auto;">
             <table class="table">
                 <thead>
@@ -56,6 +57,13 @@ export default {
                 "getMappedData"
             ]
         ),
+        reset() {
+            this.csvData = null;
+            this.setMappedHeaders([]);
+            this.setMappedData([]);
+            this.$refs.fileInput.value = "";
+            this.loading = false;
+        },
 
 
 
@@ -91,7 +99,7 @@ export default {
                     this.mapData(data);
                 }
             });
-            
+
         },
         mapData(data) {
             const headers = data.slice(0, 1)[0];
@@ -102,7 +110,7 @@ export default {
                 }, {});
             });
 
-            
+
             this.setMappedHeaders(headers);
             this.setMappedData(mappedData);
             this.loading = false;
@@ -111,6 +119,20 @@ export default {
 };
 </script>
 <style scopeds>
+.reset-btn {
+    background-color: #f44336;
+    color: white;
+    padding: 8px 16px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.reset-btn:hover {
+    background-color: #d32f2f;
+}
+
 .table {
     border-collapse: collapse;
     width: 100%;
