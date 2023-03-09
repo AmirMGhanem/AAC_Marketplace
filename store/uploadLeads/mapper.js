@@ -1,81 +1,6 @@
 export const state = () => ({
-
-    "fields": {
-        "Home_improvement": [
-            "adresse",
-            "ville",
-            "commentaire",
-            "custom_partnerid",
-            "email",
-            "prenom",
-            "ip",
-            "language",
-            "nom",
-            "complement",
-            "complement",
-            "sub_m",
-            "complement",
-            "complement",
-            "telephone",
-            "complement",
-            "complement",
-            "zipcode",
-            "adresse",
-            "ville",
-            "commentaire",
-            "custom_partnerid",
-            "email",
-            "prenom",
-            "ip",
-            "nom",
-            "complement",
-            "complement",
-            "sub_m",
-            "complement",
-            "complement",
-            "telephone",
-            "complement",
-            "complement",
-            "zipcode",
-            "adresse",
-            "ville",
-            "commentaire",
-            "custom_partnerid",
-            "email",
-            "prenom",
-            "complement",
-            "ip",
-            "nom",
-            "complement",
-            "complement",
-            "complement",
-            "complement",
-            "complement",
-            "sub_m",
-            "complement",
-            "complement",
-            "telephone",
-            "complement",
-            "complement",
-            "complement",
-            "complement",
-            "zipcode"
-        ],
-        "Education": [
-            "adresse",
-            "ville",
-            "commentaire",
-            "custom_partnerid",
-            "email",
-            "prenom",
-            "ip",
-            "language"
-        ],
-    },
-    "HomeTitle": ["Welcome To Adopt A Contractor Top Leads Marketplace",
-        "We are a top lead marketplace for customers and contractors to connect and get the job done right the first time."],
-
-
+    fields: [],
+    mappedFields: [],
 
 
 });
@@ -85,7 +10,11 @@ export const state = () => ({
 export const mutations = {
     SET_FIELDS(state, fields) {
         state.fields = fields;
+    },
+    SET_MAPPED_FIELDS(state, mappedFields) {
+        state.mappedFields = mappedFields;
     }
+
 
 };
 
@@ -96,10 +25,7 @@ export const getters = {
     getAllFields: (state) => {
 
         return state.fields;
-        
-
     },
-
 
     getFields: (state) => (category) => {
         for (var key in state.fields) {
@@ -109,13 +35,9 @@ export const getters = {
             }
         }
     },
-    getHomeTitle(state) {
-        return state.HomeTitle;
+    getMappedFields: (state) => {
+        return state.mappedFields;
     },
-
-    getHomeTitleByIndex: (state) => (index) => {
-        return state.HomeTitle[index];
-    }
 
 
 
@@ -133,5 +55,4 @@ export const actions = {
         }
     }
 
-    
 };

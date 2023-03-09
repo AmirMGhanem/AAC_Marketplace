@@ -9,10 +9,10 @@
                     Select A Vertical
                 </v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="2" :complete="currentStep > 2" :editable="currentStep > 2">Select A
-                    Vertical</v-stepper-step>
+                <v-stepper-step step="2" :complete="currentStep > 2" :editable="currentStep > 2">Upload File
+                </v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="3" :complete="currentStep > 3" :editable="currentStep > 3">Fields Mapping</v-stepper-step>
+                <v-stepper-step step="3" :complete="currentStep > 3" :editable="currentStep > 3" >Fields Mapping</v-stepper-step>
                 <v-divider></v-divider>
                 <v-stepper-step step="4" :complete="currentStep > 4" :editable="currentStep > 4">Preview & Confirmation</v-stepper-step>
                 <v-divider></v-divider>
@@ -48,7 +48,7 @@
                 <v-stepper-content step="3">
                     <v-card class="mb-5" color="grey lighten-1">
                         <h1>step3</h1>
-                        <Mapper />
+                        <Mapper ref="Mapper"/>
                     </v-card>
                     <v-btn class="continue-btn" @click="nextStep">
                         Continue
@@ -58,6 +58,7 @@
                 <v-stepper-content step="4">
                     <v-card class="mb-5" color="grey lighten-1">
                         <h1>step4</h1>
+                        <MapPreview/>
                     </v-card>
                     <v-btn class="continue-btn" @click="nextStep">
                         Continue
@@ -125,7 +126,6 @@ export default {
                     }
                     else{
                         alert("Please select a vertical")
-                    
                     }
                     break;
                 case 2:
@@ -135,10 +135,10 @@ export default {
                     }
                     else{
                         alert("Please Upload File")
-                    
                     }
                     break;
                 case 3:
+                    this.$refs.Mapper.MapFields()
                     this.currentStep++;
                     break;
                 case 4:
@@ -150,8 +150,10 @@ export default {
                 case 6:
                     this.currentStep = 1;
                     break;
+                
             }
         },
+
 
     },
     computed: {

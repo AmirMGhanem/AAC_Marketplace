@@ -65,10 +65,6 @@ export default {
             this.loading = false;
         },
 
-
-
-
-
         handleFileUpload() {
             this.loading = true;
 
