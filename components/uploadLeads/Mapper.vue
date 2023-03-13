@@ -1,26 +1,40 @@
 <template>
     <div class="container">
-            <table>
-                <tbody>
-                    <tr>
-                        <div v-for="(field, index) in  getAllFields" :key="index" class="input-group">
-                            <td>
-                                <label :for="'select-' + field.verticalfields_id" class="label">{{
-                                    field.verticalfields_fieldname
-                                }}</label>
-                                <select class="input" :id="'select-' + field.verticalfields_id">
-                                    <option v-for="(header, index) in getMappedHeaders" :key="index">{{ header }}</option>
-                                </select>
-                            </td>
-                        </div>
-                    </tr>
-                </tbody>
-            </table>
+        <h4 class="title">Headers Mapper</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>AAC Fields</th>
+                    <!-- <th>Function </th> -->
+                    <th>Your File Fields</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr v-for="(field, index) in  getAllFields" :key="index">
+                    <td> <label :for="'select-' + field.verticalfields_id" class="label">{{
+                        field.verticalfields_fieldname
+                    }}</label></td>
+                    <!-- <td>FUNC</td> -->
+                    <td>
+                        <select class="input" :id="'select-' + field.verticalfields_id">
+                            <option value="">Select</option>
+                            <option v-for="(header, index) in getMappedHeaders" :key="index">{{ header }}</option>
+                        </select>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+
+
+
 
     </div>
 </template>
 <script>
-import { mapGetters,mapMutations} from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
     data() {
@@ -65,6 +79,14 @@ export default {
 </script>
 
 <style scoped>
+select{
+    appearance: listbox ;
+}
+
+.title{
+    margin-bottom: 30px;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -73,8 +95,7 @@ export default {
 
 .input-group {
     display: flex;
-    /* flex-direction: column; */
-    align-items: flex-start;
+    /* align-items: flex-start; */
     margin-bottom: 16px;
 }
 
@@ -85,14 +106,23 @@ export default {
 }
 
 .input {
-    width: 100%;
-    height: 40px;
+
+    height: 100%;
     border: 1px solid #474747;
     border-radius: 4px;
     box-sizing: border-box;
     padding: 8px;
     text-align: center;
     font-size: larger;
+}
+.input::after {
+    /* Use the icon font */
+    font-family: 'Font Awesome 5 Free';
+    content: '\f107'; /* Replace with the icon code */
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
 }
 
 .submit {
@@ -105,31 +135,11 @@ export default {
     border-radius: 4px;
     cursor: pointer;
 }
-
-/* .table {
-    overflow-x:auto;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-.table th,
-.table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-.table th {
-    background-color: #f2f2f2;
-    text-align: left;
+th{
+    text-align: center;
     font-weight: bold;
-}
+    font-size: 28px;
 
-.table tr:hover {
-    background-color: #f5f5f5;
 }
-
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-} */
 </style>
   

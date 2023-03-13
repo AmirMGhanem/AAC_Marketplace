@@ -1,30 +1,53 @@
 <template>
     <div>
+        <h4 class="title">File template</h4>
+        <div class="scroll" style="overflow: auto;">
 
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th v-for="(header, index) in getAllFields()" :key="index">
+                            {{ header.verticalfields_fieldname }}
+                        </th>
+                    </tr>
+                </thead>
+
+            </table>
+        </div>
+        <div>
+            <p class="text-center">Please map the fields in the file to the fields in the template</p>
+            <button @click="downloadFile">Click here to download </button>
+        </div>
         <input type="file" ref="fileInput" @change="handleFileUpload" />
         <button class="reset-btn" @click="reset">Reset</button>
         <!-- Loading spinner -->
         <div v-if="loading">
             <v-progress-circular indeterminate color="primary"></v-progress-circular>
         </div>
-
-        <div style="overflow-x:auto;">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th v-for="(header, index) in getMappedHeaders()" :key="index">
-                            {{ header }}
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(row, index) in getMappedData()" :key="index">
-                        <td v-for="(value, key) in row" :key="key">
-                            {{ value }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div v-show="validfile != null">
+            <div v-if="!validfile">
+                <p style="color: red;">
+                    Invalid file headers. Please check the file headers and try again.
+                </p>
+            </div>
+            <div v-else style="overflow-x:auto;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th v-for="(header, index) in getMappedHeaders()" :key="index">
+                                {{ header }}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(row, index) in getMappedData()" :key="index">
+                            <td v-for="(value, key) in row" :key="key">
+                                {{ value }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     </div>
@@ -32,6 +55,7 @@
 <script>
 import { parse as csvParse } from "csv-parse";
 import { mapGetters, mapMutations, mapActions } from "vuex";
+import Papa from 'papaparse'
 
 
 export default {
@@ -41,6 +65,7 @@ export default {
         return {
             loading: false,
             csvData: null,
+            validfile: null,
         };
     },
 
@@ -54,9 +79,14 @@ export default {
         ...mapGetters("uploadLeads",
             [
                 "getMappedHeaders",
-                "getMappedData"
+                "getMappedData",
+                "getChoosedVertical"
             ]
         ),
+        ...mapGetters("uploadLeads/mapper", [
+            "getAllFields"
+        ]),
+
         reset() {
             this.csvData = null;
             this.setMappedHeaders([]);
@@ -67,7 +97,6 @@ export default {
 
         handleFileUpload() {
             this.loading = true;
-
             const file = this.$refs.fileInput.files[0];
             if (!file) {
                 return;
@@ -110,11 +139,48 @@ export default {
             this.setMappedHeaders(headers);
             this.setMappedData(mappedData);
             this.loading = false;
+            this.validateHeaders();
+        },
+        validateHeaders() {
+            const originalHeaders = this.getAllFields().map(
+                field => field.verticalfields_fieldname
+            );
+            const mappedHeaders = this.getMappedHeaders();
+            if (mappedHeaders.length !== originalHeaders.length) {
+                this.validfile = false;
+                return;
+            }
+            for (let i = 0; i < originalHeaders.length; i++) {
+                if (originalHeaders[i] !== mappedHeaders[i]) {
+                    this.validfile = false;
+                    return;
+                }
+            }
+            this.validfile = true;
+        },
+        downloadFile() {
+            const headers = this.getAllFields().map(
+                field => field.verticalfields_fieldname
+            );
+            const csv = Papa.unparse([headers])
+            const blob = new Blob([csv], { type: 'text/csv' })
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'template_' + this.getChoosedVertical() + '.csv';
+            link.click();
+
         }
     }
 };
 </script>
 <style scopeds>
+
+
+
+.title {
+    margin-bottom: 30px;
+}
+
 .reset-btn {
     background-color: #f44336;
     color: white;
@@ -123,6 +189,8 @@ export default {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .reset-btn:hover {

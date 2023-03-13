@@ -37,7 +37,7 @@
 
                 <v-stepper-content step="2">
                     <v-card class="mb-5" color="grey lighten-1">
-                        <h1>step2</h1>
+
                         <CsvImporter />
                     </v-card>
                     <v-btn class="continue-btn" @click="nextStep">
@@ -47,7 +47,7 @@
 
                 <v-stepper-content step="3">
                     <v-card class="mb-5" color="grey lighten-1">
-                        <h1>step3</h1>
+                        
                         <Mapper ref="Mapper"/>
                     </v-card>
                     <v-btn class="continue-btn" @click="nextStep">
@@ -58,7 +58,7 @@
                 <v-stepper-content step="4">
                     <v-card class="mb-5" color="grey lighten-1">
                         <h1>step4</h1>
-                        <MapPreview/>
+                        
                     </v-card>
                     <v-btn class="continue-btn" @click="nextStep">
                         Continue
@@ -123,6 +123,7 @@ export default {
                 case 1:
                     if (this.getChoosedVertical) {
                         this.currentStep++;
+                        this.fetchAllFields(this.getChoosedVertical);
                     }
                     else{
                         alert("Please select a vertical")
@@ -130,7 +131,7 @@ export default {
                     break;
                 case 2:
                     if (this.getMappedHeaders.length > 0 && this.getMappedHeaders.length > 0) {
-                        this.fetchAllFields(this.getChoosedVertical);
+                        
                         this.currentStep++;
                     }
                     else{

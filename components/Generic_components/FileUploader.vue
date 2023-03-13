@@ -15,8 +15,11 @@
         <v-progress-linear color="dark-blue" model-value="progress" :height="12"></v-progress-linear>
     </div>
 </template>
-  
+
 <script>
+
+import FileUploader from 'worker-loader!../../scripts/FileUploader.js'
+
 export default {
     data() {
         return {
@@ -24,7 +27,8 @@ export default {
             fileSize: 0,
             fileType: "",
             fileContent: "",
-            progress: 50
+            progress: 50,
+
         };
     },
     computed: {
@@ -47,17 +51,20 @@ export default {
             this.fileName = file.name;
             this.fileSize = file.size;
             this.fileType = file.type;
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                this.fileContent = e.target.result;
-            };
-            reader.readAsText(file);
+            
+            const MyWorker = new FileUploader();
+
+            MyWorker.postMessage(file);
+            MyWorker.addEventListener('message', (event) => {
+                this.result = event.data;
+            });
         },
     },
 
+
 };
 </script>
-  
+
 <style scoped>
 .file-uploader {
     display: flex;

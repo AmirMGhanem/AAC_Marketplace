@@ -1,9 +1,8 @@
 
 <template>
     <div>
-        <Nav />
+        <Nav/>
         <div v-if="$auth.loggedIn">
-
             <Nuxt />
         </div>
         <div v-else>
@@ -16,8 +15,10 @@
 </template>
 
 <script>
-export default {
 
+
+export default {
+    
 }
 </script>
 

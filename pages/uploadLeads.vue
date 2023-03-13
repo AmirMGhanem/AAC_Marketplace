@@ -1,9 +1,11 @@
 <template>
     <div class="container">
         <Stepper :title="title" :steps_list="steps_list" />
-
+        <!-- <RightBottom-popup :progress="50" :fileName="'sadas'"/> -->
+        
     </div>
 </template>
+
 
 <script >
 export default {
@@ -13,6 +15,9 @@ export default {
             steps_list: ["1", "2", "3", "4"],
 
         }
+    },
+    props: {
+        
     }
 }
 </script>
