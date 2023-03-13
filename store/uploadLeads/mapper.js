@@ -1,7 +1,7 @@
 export const state = () => ({
     fields: [],
-    mappedFields: [],
-
+    file_id: null,
+    file_fields_values: []
 
 });
 
@@ -11,9 +11,14 @@ export const mutations = {
     SET_FIELDS(state, fields) {
         state.fields = fields;
     },
-    SET_MAPPED_FIELDS(state, mappedFields) {
-        state.mappedFields = mappedFields;
+
+    SET_FILE_ID(state, file_id) {
+        state.file_id = file_id;
+    },
+    SET_FILE_FIELDS_VALUES(state, file_fields_values) {
+        state.file_fields_values = file_fields_values;
     }
+
 
 
 };
@@ -21,9 +26,7 @@ export const mutations = {
 
 export const getters = {
 
-
     getAllFields: (state) => {
-
         return state.fields;
     },
 
@@ -35,21 +38,31 @@ export const getters = {
             }
         }
     },
-    getMappedFields: (state) => {
-        return state.mappedFields;
+    getFileId: (state) => {
+        return state.file_id;
     },
-
-
+    getFileFieldsValues: (state) => {
+        return state.file_fields_values;
+    }
 
 };
 
 import { getVerticalFields } from "../../api/verticals";
+import { getFieldsValues } from "../../api/files";
 export const actions = {
     async fetchAllFields({ commit },vertical) {
         try {
             const fields = await getVerticalFields(vertical);
             commit('SET_FIELDS', fields);
 
+        } catch (error) {
+
+        }
+    },
+    async fetchFieldsValues({commit},fileId){
+        try {
+            const fieldsValues = await getFieldsValues(fileId);
+            commit('SET_FILE_FIELDS_VALUES', fieldsValues);
         } catch (error) {
 
         }

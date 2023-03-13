@@ -52,10 +52,11 @@
 
     </div>
 </template>
-<script>
+<script >
 import { parse as csvParse } from "csv-parse";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import Papa from 'papaparse'
+import FileUploader from 'worker-loader!../../scripts/FileUploader.js'
 
 
 export default {
@@ -66,6 +67,8 @@ export default {
             loading: false,
             csvData: null,
             validfile: null,
+            result: null,
+
         };
     },
 
@@ -74,6 +77,9 @@ export default {
         ...mapMutations("uploadLeads", [
             "setMappedHeaders",
             "setMappedData"
+        ]),
+        ...mapMutations("uploadLeads/mapper", [
+            "SET_FILE_ID",
         ]),
 
         ...mapGetters("uploadLeads",
@@ -84,8 +90,10 @@ export default {
             ]
         ),
         ...mapGetters("uploadLeads/mapper", [
-            "getAllFields"
+            "getAllFields",
+
         ]),
+
 
         reset() {
             this.csvData = null;
@@ -134,12 +142,29 @@ export default {
                     return data;
                 }, {});
             });
-
-
             this.setMappedHeaders(headers);
-            this.setMappedData(mappedData);
-            this.loading = false;
             this.validateHeaders();
+            if (this.validfile) {
+                this.setMappedData(mappedData);
+                this.loading = false;
+                // get file from input
+                const file = this.$refs.fileInput.files[0];
+                const MyWorker = new FileUploader();
+                MyWorker.onmessage = (e) => {
+                    this.result = e.data.id;
+                    this.SET_FILE_ID(this.result);
+
+                }
+                MyWorker.postMessage(file);
+                
+            }
+            else {
+                this.loading = false;
+                this.reset();
+            }
+
+
+
         },
         validateHeaders() {
             const originalHeaders = this.getAllFields().map(
@@ -174,9 +199,6 @@ export default {
 };
 </script>
 <style scopeds>
-
-
-
 .title {
     margin-bottom: 30px;
 }

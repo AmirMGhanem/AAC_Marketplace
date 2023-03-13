@@ -48,7 +48,7 @@
                 <v-stepper-content step="3">
                     <v-card class="mb-5" color="grey lighten-1">
                         
-                        <Mapper ref="Mapper"/>
+                        <ValuesMapper ref="ValuesMapper"/>
                     </v-card>
                     <v-btn class="continue-btn" @click="nextStep">
                         Continue
@@ -139,7 +139,7 @@ export default {
                     }
                     break;
                 case 3:
-                    this.$refs.Mapper.MapFields()
+                    this.$refs.ValuesMapper.MapValues()
                     this.currentStep++;
                     break;
                 case 4:
