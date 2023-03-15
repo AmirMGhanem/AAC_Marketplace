@@ -14,10 +14,10 @@
                 <tr v-for="(field, index) in  getAllFields" :key="index">
                     <td> <label :for="'select-' + field.verticalfields_id" class="label">{{
                         field.verticalfields_fieldname
-                    }}</label></td>
+                    }} <span :id="'required'">{{ field.verticalfields_mandatory==1 ? ' *' : '' }}</span></label></td>
                     <!-- <td>FUNC</td> -->
                     <td>
-                        <select class="input" :id="'select-' + field.verticalfields_id">
+                        <select class="input" :id="'select-' + field.verticalfields_id" :required="field.verticalfields_mandatory==1">
                             <option value="">Select</option>
                             <option v-for="(header, index) in getMappedHeaders" :key="index">{{ header }}</option>
                         </select>
@@ -45,14 +45,17 @@ export default {
     computed: {
         ...mapGetters("uploadLeads/mapper", [
             "getAllFields",
-            "getFileId"
+            "getFileId",
+
         ]),
+
 
         ...mapGetters("uploadLeads",
             [
                 "getMappedHeaders",
                 "getMappedData"
             ]),
+
     },
     methods: {
         ...mapMutations("uploadLeads/mapper", [
@@ -77,11 +80,11 @@ export default {
 </script>
 
 <style scoped>
-select{
-    appearance: listbox ;
+select {
+    appearance: listbox;
 }
 
-.title{
+.title {
     margin-bottom: 30px;
 }
 
@@ -103,6 +106,10 @@ select{
     margin-bottom: 4px;
 }
 
+
+#required{
+    color: red;
+}
 .input {
 
     height: 100%;
@@ -113,10 +120,12 @@ select{
     text-align: center;
     font-size: larger;
 }
+
 .input::after {
     /* Use the icon font */
     font-family: 'Font Awesome 5 Free';
-    content: '\f107'; /* Replace with the icon code */
+    content: '\f107';
+    /* Replace with the icon code */
     position: absolute;
     top: 50%;
     right: 8px;
@@ -133,7 +142,8 @@ select{
     border-radius: 4px;
     cursor: pointer;
 }
-th{
+
+th {
     text-align: center;
     font-weight: bold;
     font-size: 28px;

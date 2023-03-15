@@ -7,7 +7,8 @@ export const state = () => ({
 });
 export const mutations = {
     SET_FIELDS(state, fields) {
-        state.fields = fields;
+        const sorted_fields =fields.sort((a, b) => b.verticalfields_mandatory - a.verticalfields_mandatory);
+        state.fields = sorted_fields;
     },
 
     SET_FILE_ID(state, file_id) {
@@ -16,9 +17,11 @@ export const mutations = {
     SET_MAPPED_FIELDS(state, mapped_fields) {
         state.mapped_fields = mapped_fields;
     },
+    
     SET_FILE_FIELDS_VALUES(state, file_fields_values) {
         state.file_fields_values = file_fields_values;
     },
+
 
 };
 export const getters = {

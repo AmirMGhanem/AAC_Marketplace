@@ -5,23 +5,23 @@
         </div>
         <v-stepper v-model="currentStep">
             <v-stepper-header>
-                <v-stepper-step editable step="1" :complete="currentStep > 1" :editable="currentStep > 1">
+                <v-stepper-step step="1" :complete="currentStep > 1" >
                     Select A Vertical
                 </v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="2" :complete="currentStep > 2" :editable="currentStep > 2">Upload File
+                <v-stepper-step step="2" :complete="currentStep > 2" >Upload File
                 </v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="3" :complete="currentStep > 3" :editable="currentStep > 3">Fields
+                <v-stepper-step step="3" :complete="currentStep > 3">Fields
                     Mapping</v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="4" :complete="currentStep > 4" :editable="currentStep > 4">Preview &
+                <v-stepper-step step="4" :complete="currentStep > 4" >Preview &
                     Confirmation</v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="5" :complete="currentStep > 5" :editable="currentStep > 5">Create an ad
+                <v-stepper-step step="5" :complete="currentStep > 5" >Create an ad
                     5</v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="6" :complete="currentStep > 6" :editable="currentStep > 6">Create an ad
+                <v-stepper-step step="6" :complete="currentStep > 6" >Create an ad
                     6</v-stepper-step>
             </v-stepper-header>
 
@@ -35,6 +35,7 @@
                     <v-btn class="continue-btn" @click="nextStep">
                         Continue
                     </v-btn>
+
                 </v-stepper-content>
 
                 <v-stepper-content step="2">
@@ -44,6 +45,9 @@
                     </v-card>
                     <v-btn class="continue-btn" @click="nextStep">
                         Continue
+                    </v-btn>
+                    <v-btn class="back-btn" @click="prevStep">
+                        Back
                     </v-btn>
                 </v-stepper-content>
 
@@ -55,6 +59,9 @@
                     <v-btn class="continue-btn" @click="nextStep">
                         Continue
                     </v-btn>
+                    <v-btn class="back-btn" @click="prevStep">
+                        Back
+                    </v-btn>
                 </v-stepper-content>
                 <v-stepper-content step="4">
                     <v-card class="mb-5" color="grey lighten-1">
@@ -63,6 +70,9 @@
                     </v-card>
                     <v-btn class="continue-btn" @click="nextStep">
                         Continue
+                    </v-btn>
+                    <v-btn class="back-btn" @click="prevStep">
+                        Back
                     </v-btn>
                 </v-stepper-content>
 
@@ -73,6 +83,9 @@
                     <v-btn class="continue-btn" @click="nextStep">
                         Continue
                     </v-btn>
+                    <v-btn class="back-btn" @click="prevStep">
+                        Back
+                    </v-btn>
                 </v-stepper-content>
 
                 <v-stepper-content step="6">
@@ -81,6 +94,9 @@
                     </v-card>
                     <v-btn class="continue-btn" @click="nextStep">
                         Start over
+                    </v-btn>
+                    <v-btn class="back-btn" @click="prevStep">
+                        Back
                     </v-btn>
                 </v-stepper-content>
             </v-stepper-items>
@@ -145,8 +161,8 @@ export default {
                     this.currentStep++;
                     break;
                 case 4:
-                    // Send post request to the server with the file id and data mapped
-                    
+
+
                     this.currentStep++;
                     break;
                 case 5:
@@ -159,6 +175,11 @@ export default {
             }
         },
 
+        prevStep() {
+            if (this.currentStep > 1) {
+                this.currentStep--;
+            }
+        },
 
     },
     computed: {
@@ -178,6 +199,10 @@ export default {
 <style  scoped>
 .mb-5 {
     text-align: center;
+}
+
+.back-btn{
+    background-color: rgba(255, 153, 0, 0.602) !important;
 }
 
 .continue-btn {
