@@ -1,22 +1,9 @@
 <template>
     <div>
         <h4 class="title">File template</h4>
-        <div class="scroll" style="overflow: auto;">
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th v-for="(header, index) in getAllFields()" :key="index">
-                            {{ header.verticalfields_fieldname }}
-                        </th>
-                    </tr>
-                </thead>
-
-            </table>
-        </div>
         <div>
-            <p class="text-center">Please map the fields in the file to the fields in the template</p>
-            <button @click="downloadFile">Click here to download </button>
+
+            <button @click="downloadFile">Click here to download A Blank Template </button>
         </div>
         <input type="file" ref="fileInput" @change="handleFileUpload" />
         <button class="reset-btn" @click="reset">Reset</button>
@@ -24,31 +11,26 @@
         <div v-if="loading">
             <v-progress-circular indeterminate color="primary"></v-progress-circular>
         </div>
-        <div v-show="validfile != null">
-            <div v-if="!validfile">
-                <p style="color: red;">
-                    Invalid file headers. Please check the file headers and try again.
-                </p>
-            </div>
-            <div v-else style="overflow-x:auto;">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th v-for="(header, index) in getMappedHeaders()" :key="index">
-                                {{ header }}
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(row, index) in getMappedData()" :key="index">
-                            <td v-for="(value, key) in row" :key="key">
-                                {{ value }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+
+        <div v-else style="overflow-x:auto;">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th v-for="(header, index) in getMappedHeaders()" :key="index">
+                            {{ header }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(row, index) in getMappedData()" :key="index">
+                        <td v-for="(value, key) in row" :key="key">
+                            {{ value }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+
 
     </div>
 </template>
@@ -66,7 +48,6 @@ export default {
         return {
             loading: false,
             csvData: null,
-            validfile: null,
             result: null,
 
         };
@@ -143,46 +124,18 @@ export default {
                 }, {});
             });
             this.setMappedHeaders(headers);
-            this.validateHeaders();
-            if (this.validfile) {
-                this.setMappedData(mappedData);
-                this.loading = false;
-                // get file from input
-                const file = this.$refs.fileInput.files[0];
-                const MyWorker = new FileUploader();
-                MyWorker.onmessage = (e) => {
-                    this.result = e.data.id;
-                    this.SET_FILE_ID(this.result);
-
-                }
-                MyWorker.postMessage(file);
-                
+            this.setMappedData(mappedData);
+            this.loading = false;
+            // get file from input
+            const file = this.$refs.fileInput.files[0];
+            const MyWorker = new FileUploader();
+            MyWorker.onmessage = (e) => {
+                this.result = e.data.id;
+                this.SET_FILE_ID(this.result);
             }
-            else {
-                this.loading = false;
-                this.reset();
-            }
-
-
-
+            MyWorker.postMessage(file);
         },
-        validateHeaders() {
-            const originalHeaders = this.getAllFields().map(
-                field => field.verticalfields_fieldname
-            );
-            const mappedHeaders = this.getMappedHeaders();
-            if (mappedHeaders.length !== originalHeaders.length) {
-                this.validfile = false;
-                return;
-            }
-            for (let i = 0; i < originalHeaders.length; i++) {
-                if (originalHeaders[i] !== mappedHeaders[i]) {
-                    this.validfile = false;
-                    return;
-                }
-            }
-            this.validfile = true;
-        },
+
         downloadFile() {
             const headers = this.getAllFields().map(
                 field => field.verticalfields_fieldname

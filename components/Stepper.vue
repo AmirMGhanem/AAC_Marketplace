@@ -12,9 +12,11 @@
                 <v-stepper-step step="2" :complete="currentStep > 2" :editable="currentStep > 2">Upload File
                 </v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="3" :complete="currentStep > 3" :editable="currentStep > 3" >Fields Mapping</v-stepper-step>
+                <v-stepper-step step="3" :complete="currentStep > 3" :editable="currentStep > 3">Fields
+                    Mapping</v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="4" :complete="currentStep > 4" :editable="currentStep > 4">Preview & Confirmation</v-stepper-step>
+                <v-stepper-step step="4" :complete="currentStep > 4" :editable="currentStep > 4">Preview &
+                    Confirmation</v-stepper-step>
                 <v-divider></v-divider>
                 <v-stepper-step step="5" :complete="currentStep > 5" :editable="currentStep > 5">Create an ad
                     5</v-stepper-step>
@@ -47,18 +49,17 @@
 
                 <v-stepper-content step="3">
                     <v-card class="mb-5" color="grey lighten-1">
-                        
-                        <ValuesMapper ref="ValuesMapper"/>
+                        <Mapper ref="Mapper" />
+
                     </v-card>
                     <v-btn class="continue-btn" @click="nextStep">
                         Continue
                     </v-btn>
                 </v-stepper-content>
-
                 <v-stepper-content step="4">
                     <v-card class="mb-5" color="grey lighten-1">
                         <h1>step4</h1>
-                        
+                        <ValueMapper2 ref="ValMap"/>
                     </v-card>
                     <v-btn class="continue-btn" @click="nextStep">
                         Continue
@@ -88,7 +89,7 @@
 </template>
 <script>
 
-import { mapGetters,mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 
 export default {
@@ -112,8 +113,9 @@ export default {
         this.$store.dispatch("vertical/fetchAllVerticals");
     },
     methods: {
-        ...mapActions("uploadLeads/mapper",[
-            "fetchAllFields"
+        ...mapActions("uploadLeads/mapper", [
+            "fetchAllFields",
+            "getDataFromFile"
         ]),
         ...mapGetters({
             verticals: "vertical/GetVerticals",
@@ -122,27 +124,29 @@ export default {
             switch (this.currentStep) {
                 case 1:
                     if (this.getChoosedVertical) {
-                        this.currentStep++;
                         this.fetchAllFields(this.getChoosedVertical);
+                        this.currentStep++;
                     }
-                    else{
+                    else {
                         alert("Please select a vertical")
                     }
                     break;
                 case 2:
                     if (this.getMappedHeaders.length > 0 && this.getMappedHeaders.length > 0) {
-                        
                         this.currentStep++;
                     }
-                    else{
+                    else {
                         alert("Please Upload File")
                     }
                     break;
                 case 3:
-                    this.$refs.ValuesMapper.MapValues()
+                    this.$refs.Mapper.MapFields();
+                    this.$refs.ValMap.MapValues();
                     this.currentStep++;
                     break;
                 case 4:
+                    // Send post request to the server with the file id and data mapped
+                    
                     this.currentStep++;
                     break;
                 case 5:
@@ -151,7 +155,7 @@ export default {
                 case 6:
                     this.currentStep = 1;
                     break;
-                
+
             }
         },
 
@@ -161,8 +165,11 @@ export default {
         ...mapGetters("uploadLeads", [
             "getChoosedVertical",
             "getMappedHeaders",
-            "getMappedHeaders",
-        ])
+        ]),
+        ...mapGetters("uploadLeads/mapper", [
+            "getFileId",
+            "getMappedFields",
+        ]),
     }
 };
 

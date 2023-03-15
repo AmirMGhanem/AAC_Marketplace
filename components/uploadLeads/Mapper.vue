@@ -34,17 +34,18 @@
     </div>
 </template>
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export default {
     data() {
         return {
-            prev: false,
+            
         };
     },
     computed: {
         ...mapGetters("uploadLeads/mapper", [
-            "getAllFields"
+            "getAllFields",
+            "getFileId"
         ]),
 
         ...mapGetters("uploadLeads",
@@ -57,21 +58,18 @@ export default {
         ...mapMutations("uploadLeads/mapper", [
             "SET_MAPPED_FIELDS",
         ]),
-        MapFields() {
 
+        MapFields() {
             let data = {};
             const fields = this.getAllFields;
-
             for (let i = 0; i < fields.length; i++) {
                 const fieldName = fields[i].verticalfields_fieldname;
                 const selectElement = document.getElementById(`select-${fields[i].verticalfields_id}`);
                 const selectedOption = selectElement.options[selectElement.selectedIndex].value;
                 data[fieldName] = selectedOption;
             }
-            // Data object now contains the selected options as key-value pairs
             console.table(data);
             this.SET_MAPPED_FIELDS(data);
-            this.prev = true;
         },
 
     }
