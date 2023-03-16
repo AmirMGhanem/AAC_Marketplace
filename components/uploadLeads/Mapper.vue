@@ -19,7 +19,7 @@
                     <td>
                         <select class="input" :id="'select-' + field.verticalfields_id" :required="field.verticalfields_mandatory==1">
                             <option value="">Select</option>
-                            <option v-for="(header, index) in getMappedHeaders" :key="index">{{ header }}</option>
+                            <option v-for="(header, index) in getMappedHeaders" :key="index" :selected="header == getPredictedFields[field.verticalfields_fieldname]">{{ header }}</option>
                         </select>
                     </td>
                 </tr>
@@ -27,6 +27,8 @@
             </tbody>
         </table>
 
+        
+        
 
 
 
@@ -45,7 +47,7 @@ export default {
     computed: {
         ...mapGetters("uploadLeads/mapper", [
             "getAllFields",
-            "getFileId",
+            "getPredictedFields"
 
         ]),
 
@@ -53,7 +55,7 @@ export default {
         ...mapGetters("uploadLeads",
             [
                 "getMappedHeaders",
-                "getMappedData"
+                "getMappedData",
             ]),
 
     },

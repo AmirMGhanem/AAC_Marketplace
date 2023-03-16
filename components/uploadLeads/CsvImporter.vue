@@ -61,6 +61,7 @@ export default {
         ]),
         ...mapMutations("uploadLeads/mapper", [
             "SET_FILE_ID",
+            "SET_PREDICTED_FIELDS"
         ]),
 
         ...mapGetters("uploadLeads",
@@ -132,8 +133,9 @@ export default {
             MyWorker.onmessage = (e) => {
                 this.result = e.data.id;
                 this.SET_FILE_ID(this.result);
+                this.SET_PREDICTED_FIELDS(e.data.predicted_fields)
             }
-            MyWorker.postMessage(file);
+            MyWorker.postMessage({file:file, headers:headers});
         },
 
         downloadFile() {

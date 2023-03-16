@@ -3,6 +3,7 @@ export const state = () => ({
     file_id: null,
     mapped_fields: [],
     file_fields_values: [],
+    predicted_fields:[],
 
 });
 export const mutations = {
@@ -21,6 +22,9 @@ export const mutations = {
     SET_FILE_FIELDS_VALUES(state, file_fields_values) {
         state.file_fields_values = file_fields_values;
     },
+    SET_PREDICTED_FIELDS(state, predicted_fields) {
+        state.predicted_fields = predicted_fields;
+    }
 
 
 };
@@ -38,7 +42,11 @@ export const getters = {
 
     getMappedFields: (state) => {
         return state.mapped_fields;
+    },
+    getPredictedFields: (state) => {
+        return state.predicted_fields;
     }
+
 
 };
 

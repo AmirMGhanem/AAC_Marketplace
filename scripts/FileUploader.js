@@ -1,18 +1,17 @@
 import apiClient from "../api/api.js";
 
-
 self.addEventListener('message', async (event) => {
-    if (event.data instanceof File) {
-        const file = event.data;
-        let res = await uploadFile(file);
+    if (event.data.file instanceof File) {
+        const file = event.data.file;
+        const headers = event.data.headers;
+        let res = await uploadFile(file, headers);
         self.postMessage(res.data); // send the response data back to the component
-
     }
 });
-
-async function uploadFile(file) {
+async function uploadFile(file, headers) {
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('headers', headers);
 
     const config = {
         headers: {
