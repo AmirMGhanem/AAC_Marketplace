@@ -74,7 +74,18 @@ export default {
             console.table(data);
             this.SET_MAPPED_FIELDS(data);
         },
-
+        validateRequired(){
+            const fields = this.getAllFields;
+            for (let i = 0; i < fields.length; i++) {
+                const fieldName = fields[i].verticalfields_fieldname;
+                const selectElement = document.getElementById(`select-${fields[i].verticalfields_id}`);
+                const selectedOption = selectElement.options[selectElement.selectedIndex].value;
+                if(selectedOption == "" && fields[i].verticalfields_mandatory==1){
+                    return false;
+                }
+            }
+            return true;
+        },
     }
 }
 </script>

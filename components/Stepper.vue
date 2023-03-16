@@ -5,23 +5,23 @@
         </div>
         <v-stepper v-model="currentStep">
             <v-stepper-header>
-                <v-stepper-step step="1" :complete="currentStep > 1" >
+                <v-stepper-step step="1" :complete="currentStep > 1">
                     Select A Vertical
                 </v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="2" :complete="currentStep > 2" >Upload File
+                <v-stepper-step step="2" :complete="currentStep > 2">Upload File
                 </v-stepper-step>
                 <v-divider></v-divider>
                 <v-stepper-step step="3" :complete="currentStep > 3">Fields
                     Mapping</v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="4" :complete="currentStep > 4" >Preview &
-                    Confirmation</v-stepper-step>
+                <v-stepper-step step="4" :complete="currentStep > 4"> Values
+                    Mapping</v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="5" :complete="currentStep > 5" >Create an ad
+                <v-stepper-step step="5" :complete="currentStep > 5">Create an ad
                     5</v-stepper-step>
                 <v-divider></v-divider>
-                <v-stepper-step step="6" :complete="currentStep > 6" >Create an ad
+                <v-stepper-step step="6" :complete="currentStep > 6">Create an ad
                     6</v-stepper-step>
             </v-stepper-header>
 
@@ -66,7 +66,7 @@
                 <v-stepper-content step="4">
                     <v-card class="mb-5" color="grey lighten-1">
                         <h1>step4</h1>
-                        <ValueMapper2 ref="ValMap"/>
+                        <ValueMapper2 ref="ValMap" />
                     </v-card>
                     <v-btn class="continue-btn" @click="nextStep">
                         Continue
@@ -156,9 +156,14 @@ export default {
                     }
                     break;
                 case 3:
-                    this.$refs.Mapper.MapFields();
-                    this.$refs.ValMap.MapValues();
-                    this.currentStep++;
+                    if (this.$refs.Mapper.validateRequired()) {
+                        this.$refs.Mapper.MapFields();
+                        this.$refs.ValMap.MapValues();
+                        this.currentStep++;
+                    }
+                    else {
+                        alert("Please Map all required fields")
+                    }
                     break;
                 case 4:
 
@@ -201,7 +206,7 @@ export default {
     text-align: center;
 }
 
-.back-btn{
+.back-btn {
     background-color: rgba(255, 153, 0, 0.602) !important;
 }
 
