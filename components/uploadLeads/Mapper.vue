@@ -7,28 +7,42 @@
                     <th>AAC Fields</th>
                     <!-- <th>Function </th> -->
                     <th>Your File Fields</th>
+                    <th>
+                        Validation
+                    </th>
                 </tr>
+
 
             </thead>
             <tbody>
                 <tr v-for="(field, index) in  getAllFields" :key="index">
                     <td> <label :for="'select-' + field.verticalfields_id" class="label">{{
                         field.verticalfields_fieldname
-                    }} <span :id="'required'">{{ field.verticalfields_mandatory==1 ? ' *' : '' }}</span></label></td>
+                    }} <span :id="'required'">{{ field.verticalfields_mandatory == 1 ? ' *' : '' }}</span></label>
+                    </td>
                     <!-- <td>FUNC</td> -->
                     <td>
-                        <select class="input" :id="'select-' + field.verticalfields_id" :required="field.verticalfields_mandatory==1">
+                        <select class="input" :id="'select-' + field.verticalfields_id"
+                            :required="field.verticalfields_mandatory == 1">
                             <option value="">Select</option>
-                            <option v-for="(header, index) in getMappedHeaders" :key="index" :selected="header == getPredictedFields[field.verticalfields_fieldname]">{{ header }}</option>
+                            <option v-for="(header, index) in getMappedHeaders" :key="index"
+                                :selected="header == getPredictedFields[field.verticalfields_fieldname]">{{ header }}
+                            </option>
                         </select>
+                        <p class="example"> Example : {{ field.verticalfields_example }}</p>
+                    </td>
+                    <td>
+                        <div :id="'validation' + field.verticalfields_id">
+                            <p>File values : {{}}</p>
+                            <p>Validation : {{validateData()}}</p>
+                        </div>
                     </td>
                 </tr>
-
             </tbody>
         </table>
 
-        
-        
+
+
 
 
 
@@ -41,7 +55,10 @@ import { mapActions, mapGetters, mapMutations } from 'vuex';
 export default {
     data() {
         return {
-            
+
+
+
+
         };
     },
     computed: {
@@ -50,6 +67,7 @@ export default {
             "getPredictedFields"
 
         ]),
+
 
 
         ...mapGetters("uploadLeads",
@@ -63,6 +81,10 @@ export default {
         ...mapMutations("uploadLeads/mapper", [
             "SET_MAPPED_FIELDS",
         ]),
+        validateData(){
+
+        },
+
 
         MapFields() {
             let data = {};
@@ -76,23 +98,44 @@ export default {
             console.table(data);
             this.SET_MAPPED_FIELDS(data);
         },
-        validateRequired(){
+        validateRequired() {
             const fields = this.getAllFields;
             for (let i = 0; i < fields.length; i++) {
                 const fieldName = fields[i].verticalfields_fieldname;
                 const selectElement = document.getElementById(`select-${fields[i].verticalfields_id}`);
                 const selectedOption = selectElement.options[selectElement.selectedIndex].value;
-                if(selectedOption == "" && fields[i].verticalfields_mandatory==1){
+                if (selectedOption == "" && fields[i].verticalfields_mandatory == 1) {
                     return false;
                 }
             }
             return true;
         },
-    }
+
+    },
+    // watch: {
+    //     validationMessages: {
+    //         handler(newMessages) {
+    //             for (const field of this.getAllFields) {
+    //                 const id = field.verticalfields_id;
+    //                 if (newMessages[id] === 'Invalid value') {
+    //                     this.$el.querySelector(`#select-${id}`).classList.add('is-danger');
+    //                 } else {
+    //                     this.$el.querySelector(`#select-${id}`).classList.remove('is-danger');
+    //                 }
+    //             }
+    //         },
+    //         deep: true,
+    //     },
+    // },
 }
 </script>
 
 <style scoped>
+.example {
+    font-size: 12px;
+    color: #474747;
+}
+
 select {
     appearance: listbox;
 }
@@ -120,9 +163,10 @@ select {
 }
 
 
-#required{
+#required {
     color: red;
 }
+
 .input {
 
     height: 100%;
